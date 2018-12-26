@@ -27,7 +27,7 @@ func main() {
 	// ルート
 	http.Handle("/", &templateHandler{filename: "chat.html"})
 	// Web サーバーを開始します
-	if err := http.ListenAndServe(".8080", nil); err != nil {
+	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
 }
