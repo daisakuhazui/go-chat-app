@@ -65,6 +65,7 @@ func (r *room) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 }
 
 func newRoom() *room {
+	// newRoom はすぐに利用できるチャットルームを生成して返します
 	return &room{
 		forward: make(chan []byte),
 		join:    make(chan *client),
