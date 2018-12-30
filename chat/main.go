@@ -33,12 +33,13 @@ func main() {
 	r.tracer = trace.New(os.Stdout)
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
 	http.Handle("/login", &templateHandler{filename: "login.html"})
+	http.HandleFunc("/auth/", loginHandler)
 	http.Handle("/room", r)
 	// チャットルームを開始します
 	go r.run()
 	// Webサーバーを起動します
 	log.Println("Webサーバーを開始します。 ポート: ", *addr)
-	log.Printf("http://localhost%v", *addr)
+	log.Printf("http://localhost%v/login", *addr)
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
