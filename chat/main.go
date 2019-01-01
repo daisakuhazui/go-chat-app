@@ -38,8 +38,8 @@ func main() {
 	// チャットルームを開始します
 	go r.run()
 	// Webサーバーを起動します
-	log.Println("Webサーバーを開始します。 ポート: ", *addr)
-	log.Printf("http://localhost%v/login", *addr)
+	log.Println("Starting Web server... Port: ", *addr)
+	log.Printf("http://localhost%v/chat", *addr)
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
