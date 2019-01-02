@@ -1,1 +1,6 @@
+# Ignore files
 .DS_Store
+
+# Ignore binary file
+## MAKEFILE で指定されているバイナリファイル名を定数管理しておきたい
+/chat/go-chat-app
