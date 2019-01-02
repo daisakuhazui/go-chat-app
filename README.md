@@ -6,6 +6,12 @@
 - 対応している外部サービスはfacebook, twitter, GitHub です
 ```
 
+## パッケージのインストール
+```
+$ cd chat
+$ make dep
+```
+
 ## ビルド方法
 ```
 $ cd chat

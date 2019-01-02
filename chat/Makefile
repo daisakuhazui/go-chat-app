@@ -7,6 +7,9 @@ GOGET=$(GOCMD) get
 BINARY_NAME=go-chat-app
 BINARY_UNIX=$(BINARY_NAME)_unix
 
+dep:
+	dep ensure -vendor-only
+
 build:
 	$(GOBUILD) -o $(BINARY_NAME) -v
 
