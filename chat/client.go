@@ -1,19 +1,25 @@
 package main
 
 import (
+	"time"
+
 	"github.com/gorilla/websocket"
 )
 
 // client はチャットを行っている1人のユーザーを表します
 type client struct {
-	socket *websocket.Conn // socket はこのクライアントのための WebSocket です
-	send   chan []byte     // send はメッセージが送られるチャネルです
-	room   *room           // room はこのクライアントが参加しているチャットルームです
+	socket   *websocket.Conn        // socket はこのクライアントのための WebSocket です
+	send     chan *message          // send はメッセージが送られるチャネルです
+	room     *room                  // room はこのクライアントが参加しているチャットルームです
+	userData map[string]interface{} // userData はユーザーに関する情報を保持しします
 }
 
 func (c *client) read() {
 	for {
-		if _, msg, err := c.socket.ReadMessage(); err == nil {
+		var msg *message
+		if err := c.socket.ReadJSON(&msg); err == nil {
+			msg.When = time.Now()
+			msg.Name = c.userData["name"].(string)
 			c.room.forward <- msg
 		} else {
 			break
@@ -24,7 +30,7 @@ func (c *client) read() {
 
 func (c *client) write() {
 	for msg := range c.send {
-		if err := c.socket.WriteMessage(websocket.TextMessage, msg); err != nil {
+		if err := c.socket.WriteJSON(msg); err != nil {
 			break
 		}
 	}
