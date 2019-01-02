@@ -1,3 +1,6 @@
+# External vendor
+vendor/
+
 # Ignore files
 .DS_Store
 
