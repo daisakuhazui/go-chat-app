@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/stretchr/objx"
+
 	"github.com/stretchr/gomniauth"
 )
 
@@ -49,6 +51,29 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 			log.Fatalln("ERROR occured in calling GetBeginAuthURL:", provider, "-", err)
 		}
 		w.Header().Set("Location", loginUrl)
+		w.WriteHeader(http.StatusTemporaryRedirect)
+	case "callback":
+		provider, err := gomniauth.Provider(provider)
+		if err != nil {
+			log.Fatalln("Fail to get authentication provider:", provider, "-", err)
+		}
+		creds, err := provider.CompleteAuth(objx.MustFromURLQuery(r.URL.RawQuery))
+		if err != nil {
+			log.Fatalln("Incomplete authentication", provider, "-", err)
+		}
+		user, err := provider.GetUser(creds)
+		if err != nil {
+			log.Fatalln("Fail to get user", provider, "-", err)
+		}
+		autheCookieValue := objx.New(map[string]interface{}{
+			"name": user.Name(),
+		}).MustBase64()
+		http.SetCookie(w, &http.Cookie{
+			Name:  "auth",
+			Value: autheCookieValue,
+			Path:  "/",
+		})
+		w.Header()["Location"] = []string{"/chat"}
 		w.WriteHeader(http.StatusTemporaryRedirect)
 	default:
 		w.WriteHeader(http.StatusNotFound)
