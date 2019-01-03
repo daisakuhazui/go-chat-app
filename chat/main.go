@@ -54,7 +54,8 @@ func main() {
 	go r.run()
 	// Webサーバーを起動します
 	log.Println("Starting Web server... Port: ", *addr)
-	log.Printf("http://localhost%v/chat", *addr)
+	log.Printf("Web application -- http://localhost%v/chat", *addr)
+	log.Printf("Login Page -- http://localhost%v/login", *addr)
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}

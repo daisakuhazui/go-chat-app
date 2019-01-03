@@ -42,6 +42,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	provider := segs[3]
 	switch action {
 	case "login":
+		// login アクション
 		provider, err := gomniauth.Provider(provider)
 		if err != nil {
 			log.Fatalln("Fail to get authentication provider:", provider, "-", err)
@@ -53,6 +54,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Location", loginUrl)
 		w.WriteHeader(http.StatusTemporaryRedirect)
 	case "callback":
+		// callback アクション
 		provider, err := gomniauth.Provider(provider)
 		if err != nil {
 			log.Fatalln("Fail to get authentication provider:", provider, "-", err)
@@ -76,6 +78,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		w.Header()["Location"] = []string{"/chat"}
 		w.WriteHeader(http.StatusTemporaryRedirect)
 	default:
+		// サポートされていないアクション
 		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprintf(w, "Unsupported Action: %s", action)
 	}
