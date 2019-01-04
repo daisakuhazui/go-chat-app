@@ -1,19 +1,24 @@
 <html>
   <head>
     <title>go-chat-app</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <style>
       input { display: block; }
       ul {list-style: none;}
     </style>
   </head>
   <body>
-    <ul id="messages"></ul>
-    WebSocket を使ったチャットアプリケーション
-    <form id="chatbox">
-      {{.UserData.name}}:<br/>
-      <textarea></textarea>
-      <input type="submit" value="Send">
-    </form>
+    <div class="container">
+      <ul id="messages"></ul>
+      WebSocket を使ったチャットアプリケーション
+      <form id="chatbox">
+        <p>
+          {{.UserData.name}}:<br/>
+          <textarea cols="40" rows="5" maxlength="140" placeholder="Enter message"></textarea>
+          <input type="submit" value="Send">
+        </p>
+      </form>
+    </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script>
       $(function(){
