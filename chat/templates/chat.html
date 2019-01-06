@@ -3,21 +3,26 @@
     <title>go-chat-app</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <style>
-      input { display: block; }
-      ul {list-style: none;}
+      ul#messages { list-style: none; }
+      ul#messages li { margin-bottom: 2px; }
+      ul#messages li  img { margin-right: 10px; }
     </style>
   </head>
   <body>
     <div class="container">
-      <ul id="messages"></ul>
+      <div class="panel panel-dafault">
+        <div class="panel-body">
+          <ul id="messages"></ul>
+        </div>
+      </div>
       WebSocket を使ったチャットアプリケーション
-      <form id="chatbox">
-        <p>
-          {{.UserData.name}}:<br/>
-          <textarea cols="40" rows="5" maxlength="140" placeholder="Enter message"></textarea>
-          <input type="submit" value="Send">
+      <form id="chatbox" role="form">
+        <div class="form-group">
+          <label for="message">Sending a message from {{.UserData.name}}</label>
           or <a href="/logout">Sign out</a>
-        </p>
+          <textarea cols="40" rows="5" maxlength="140" placeholder="Enter message"></textarea>
+        </div>
+        <input type="submit" value="Send" class="btn btn-dafault">
       </form>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -47,7 +52,7 @@
             var msg = eval("("+e.data+")");
             messages.append(
               $("<li>").append(
-                $("<img>").css({
+                $("<img>").attr("title", msg.Name).css({
                   widht:50,
                   verticalAlign:"middle"
                 }).attr("src", msg.AvatarURL),
