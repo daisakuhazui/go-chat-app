@@ -29,3 +29,6 @@ $ make run
 $ cd chat
 $ make test
 ```
+
+## PR作成用のサンプル
+hogehoge
